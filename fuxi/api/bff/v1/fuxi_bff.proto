@@ -1,0 +1,42 @@
+// protoc -I third_party -I fuxi/api/bff/v1 --go_out=. --go-grpc_out=. --go-http_out=. fuxi/api/bff/v1/fuxi_bff.proto
+
+syntax = "proto3";
+package v1;
+option go_package = "fuxi/api/bff/v1";
+import "google/api/annotations.proto";
+import "google/protobuf/empty.proto";
+
+message SetUrlRequest {
+  string real_url = 1;
+  string short_url = 2;
+}
+
+message GetUrlRequest {
+  string short_url = 1;
+}
+
+message GetUrlResponse {
+  string real_url = 1;
+}
+
+message AllocationRequest {
+  string real_url = 1;
+}
+
+message AllocationResponse {
+  string short_url = 1;
+}
+
+service FuxiBFF {
+  rpc SetUrl (SetUrlRequest) returns (google.protobuf.Empty) {
+    option (google.api.http) = {
+      get: "/fuxi/set_url",
+    };
+  }
+  rpc GetUrl (GetUrlRequest) returns (GetUrlResponse) {
+    option (google.api.http) = {
+      get: "/fuxi/real_url",
+    };
+  }
+  rpc AllocationUrl (AllocationRequest) returns (AllocationResponse) {}
+}

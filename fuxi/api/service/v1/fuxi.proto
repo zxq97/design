@@ -1,0 +1,14 @@
+// protoc --go_out=. --go-grpc_out=. fuxi/api/service/v1/fuxi.proto
+
+syntax = "proto3";
+package v1;
+option go_package = "fuxi/api/service/v1";
+import "google/protobuf/empty.proto";
+
+message GetGenerateResponse {
+  int64 gid = 1;
+}
+
+service Fuxi {
+  rpc GetGenerateID (google.protobuf.Empty) returns (GetGenerateResponse) {}
+}
